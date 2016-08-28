@@ -1,0 +1,4377 @@
+<!DOCTYPE html>
+<fmeta charset="UTF-8"> 
+
+<html>
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" />
+<section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;"><!-- Script Sources --><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<script>
+var currentTrial = 1;
+function NextTrial() {
+	var checkedValue = $("input[type=radio]:checked", "#page" + currentTrial).val();
+	if (checkedValue) {
+		$("#page" + currentTrial).hide();
+		$("#page" + (currentTrial+1)).show();
+		currentTrial++;
+	} else {
+		alert('Please answer the question before moving on!');
+	}
+}
+
+
+
+
+function Continue() {
+	$("#page" + currentTrial).hide();
+	$("#page" + (currentTrial+1)).show();
+	currentTrial++;
+}
+
+function Ineligible() {
+	$("#page" + currentTrial).hide();
+	$("#page1000").show();
+	currentTrial++;
+}
+
+function Skip() {
+	var checkedValue = $("input[type=radio]:checked", "#page" + currentTrial).val();
+	if (checkedValue == "yes") {
+		$("#page" + currentTrial).hide();
+		$("#page" + (currentTrial+1)).show();
+		currentTrial++; }
+	else if (checkedValue == "no") {
+		$("#page" + currentTrial).hide();
+		$("#page" + (currentTrial+2)).show();
+		currentTrial++;
+	} else {
+		alert('Please answer the question before moving on!');
+	}
+}
+
+function IsConsent() {
+	var checkedValue = $("input[type=radio]:checked", "#page" + currentTrial).val();
+	if (checkedValue == "consent") {
+		$("#page" + currentTrial).hide();
+		$("#page" + (currentTrial+1)).show();
+		currentTrial++; }
+	else if (checkedValue == "notconsent") {
+		alert('Please skip this HIT.');		
+	} else {
+		alert('Please answer the question before moving on!');
+	}
+}
+
+function validateAge() {
+	var checkedAge = $("#Age").val();
+	if (checkedAge != "") {
+		javascript:CheckAge(); }
+	else {
+		alert("Please Select Your Age");
+   	}
+}
+
+
+function CheckAge() {
+	var checkedAge = $("#Age").val();
+	if(checkedAge > 17) { 
+		javascript:Continue(); 
+		} else{javascript:Ineligible(); }
+	}
+
+
+$("form").keypress(function(e) {
+  //Enter key
+  if (e.which == 13) {
+    return false;
+  }
+});
+function CheckSummary1() {
+	var description = $.trim($('#trial1_summary').val());
+	if(description.length == 0){
+	    alert('Please write a short summary before continuing');}
+	else{javascript:Continue();}
+}
+
+
+
+function CheckSummary2() {
+	var description = $.trim($('#trial2_summary').val());
+	if(description.length == 0){
+	    alert('Please write a short summary before continuing');}
+	else{javascript:Continue();}
+}
+
+
+function CheckSummary3() {
+	var description = $.trim($('#trial3_summary').val());
+	if(description.length == 0){
+	    alert('Please write a short summary before continuing');}
+	else{javascript:Continue();}
+}
+
+
+
+function CheckSummary4() {
+	var description = $.trim($('#trial4_summary').val());
+	if(description.length == 0){
+	    alert('Please write a short summary before continuing');}
+	else{javascript:Continue();}
+}
+
+
+
+function CheckSummary5() {
+	var description = $.trim($('#trial5_summary').val());
+	if(description.length == 0){
+	    alert('Please write a short summary before continuing');}
+	else{javascript:Continue();}
+}
+
+
+
+function CheckSummary6() {
+	var description = $.trim($('#trial6_summary').val());
+	if(description.length == 0){
+	    alert('Please write a short summary before continuing');}
+	else{javascript:Continue();}
+}
+
+
+
+function CheckSummary7() {
+	var description = $.trim($('#trial7_summary').val());
+	if(description.length == 0){
+	    alert('Pease write a short summary before continuing');}
+	else{javascript:Continue();}
+}
+
+
+
+function CheckSummary8() {
+	var description = $.trim($('#trial8_summary').val());
+	if(description.length == 0){
+	    alert('Please write a short summary before continuing');}
+	else{javascript:Continue();}
+}
+
+
+
+function CheckSummary9() {
+	var description = $.trim($('#trial9_summary').val());
+	if(description.length == 0){
+	    alert('Please write a short summary before continuing');}
+	else{javascript:Continue();}
+}
+
+
+
+function CheckSummary10() {
+	var description = $.trim($('#trial10_summary').val());
+	if(description.length == 0){
+	    alert('Please write a short summary before continuing');}
+	else{javascript:Continue();}
+}
+
+function CheckSummary() {
+	var description = $.trim($('#summary').val());
+	if(description.length == 0){
+	    alert('Please write a short summary before continuing');}
+	else{javascript:Continue();}
+}
+
+</script>
+
+<!-- Setup -->
+<style type="text/css">.page {
+	display: none;
+}
+
+#page1 {
+	display: block;
+}
+
+
+h1 {
+    left: 100px;
+}
+
+
+h2 {
+    left: 100px;
+}
+
+
+h3 {
+    left: 100px;
+}
+
+
+h4 {
+    left: 100px;
+}
+
+
+h5 {
+    left: 100px;
+}
+
+</style>
+
+<script>
+var condition = ${condition}
+</script>
+
+<!-- Instructions -->
+<div class="page" id="page1">
+<h3>Story Task Overview</h3>
+<h4>This is a study conducted by the University of Rochester. For this task, we are seeking feedback on 10 stories &lpar;&lt; 2 minutes each&rpar;. </h4>
+<br/><br/>
+<h4>
+You will be shown clips from 10 stories. For each story, you will be presented with 4 audio clips. When you have completed listening to an audio clip, you will be automatically directed to the next page. For each audio clip, you will be asked to rate your curiosity about hearing the rest of the story. Then, you will be asked to write a short summary of the story you've heard so far. Finally, you will be given the option of continuing to the end of the story. </h4>
+
+
+
+<script> 
+var checkturkid = [];
+</script>
+
+<br/><br/>
+<h3> Eligibility Requirements </h3>
+<br/>
+<h4> 1. Enter your WorkerID to determine whether you have already submitted work for this HIT:</h4>
+<input type="text" id="EnterWorkerID"/>
+
+
+
+<button type="button" value="Continue" onclick="var val = document.getElementById('EnterWorkerID').value; val = val.replace(/\s/g, ''); val= val.toUpperCase();  if(val.length == 0) { alert('Please enter your WorkerID!');} else if(!!(checkturkid.indexOf(val)+1)) { alert('You are not elgible. Do NOT complete this HIT.');}else{ alert('Proceed to #2.'); }">Check Eligibility</button> 
+<p style = "color: red;">Note: If you are ineligible and you submit this HIT, your HIT will be rejected.</p>
+
+<br/><br/><br/>
+<h4> 2. Do NOT submit more than one HIT. If you submit more than one HIT, your HIT will be rejected.</h4> 
+<br/><br/>
+
+
+<!-- Sound Test -->
+
+<script>
+var audio_test_word = "banana";
+</script>
+<h4> 3. Sound test:</h4>
+<h4>To ensure that your audio is working properly, you must complete the following sound test. Click on the button below to play a word, and type the word in the box provided. Then press the <b>Continue</b> button to proceed. If you enter the word incorrectly, you will be prompted to retry until you have entered it correctly. If you cannot hear the word, do NOT accept this HIT as you will not be able to complete the study. <b> If you have done a study from this requester and have heard this word before, <u>do not accept this HIT</u></b>.</h4>
+
+<h4> 
+ <audio id="player0" src="https://colala.bcs.rochester.edu/shirlene/stimuli/banana.mp3"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player0').play()" >Play</button>
+    <button type="button" onclick="document.getElementById('player0').pause()">Pause</button>
+
+</div></h4>
+<p style = "color: red;">Does this sound clip seem familiar? If you have heard this before, DO NOT ACCEPT THIS HIT. Your HIT will be rejected.</p>
+<input type="text" id="audio_test_word_input" />
+<br /><br />
+<p>&nbsp;</p>
+<h4>
+<br />
+<h4 style = "color:red;"> By clicking 'I agree,' you acknowledge that you have read the eligibility requirements and entered your Worker ID to determine eligibility. If you complete this HIT but are ineligible, your HIT will be rejected. To check eligibility, enter your Worker ID above.</h4>
+<br />
+<button type="button" value="Continue" onclick="var val = document.getElementById('audio_test_word_input').value; if(val.toLowerCase() == audio_test_word) { javascript:Continue(); }else{ alert('Your response is incorrect. Please re-enter the word from the sound clip. If you cannot hear the sound clip, do NOT accept this HIT as you will not be able to complete this study.'); }">I agree</button>
+</h4>
+</div>
+
+<div class="page" id="page2">
+
+<h3> By completing the following task, you are participating in a study coducted by researchers at the University of Rochester. Before accepting this HIT, please read the consent form <a href ="http://babylab.bcs.rochester.edu/mturk_info.pdf" target="_blank">here</a>.</h3>
+<h4>
+<fieldset>
+<div class="radio"><label><input name="Consent" type="radio" value="consent" />I have read the consent form and give my consent. </label></div>
+
+<div class="radio"><label><input name="Consent" type="radio" value="notconsent" />I do not consent.</label></div>
+</fieldset>
+</h4>
+<p>&nbsp;</p>
+
+<h4>
+<button type="button" onclick="javascript:IsConsent()">Continue</button>
+</h4>
+
+</div>
+
+
+<!-- COMMENT: MAKE SURE TO INSERT BUTTON OR AUTO ACCEPT HIT ON PAGE -->
+<!-- COMMENT: MAKE SURE TO INCLUDE LINK FOR AGE, GENDER, ETHNICITY., OPTIONAL -->
+
+<div class="page" id="page3">
+
+<h3>Answer the following demographic questions:</h3>
+
+<h4>
+<fieldset><label>1. What is your gender? </label>
+
+<div class="radio"><label><input name="Gender" type="radio" value="Male" />Male </label></div>
+
+<div class="radio"><label><input name="Gender" type="radio" value="Female" />Female </label></div>
+
+<div class="radio"><label><input name="Gender" type="radio" value="NA" />Wish not to report </label></div>
+
+</fieldset>
+
+<fieldset>
+<!-- add age limitation here -->
+
+<div class="numeric"><label>*2. What is your age in years?</label>
+<input type="number" name="Age" id="Age" min=1 max=100/></div>
+</fieldset>
+<fieldset><label>3. Do you consider yourself to be: </label>
+
+<div class="radio"><label><input name="Ethnicity" type="radio" value="Hispanic" />Hispanic or Latino</label></div>
+
+<div class="radio"><label><input name="Ethnicity" type="radio" value="Non-Hispanic" />Not Hispanic or Latino </label></div>
+
+<div class="radio"><label><input name="Ethnicity" type="radio" value="NoResponse" />Unknown or wish not to report </label></div>
+</fieldset>
+<fieldset>
+<label>4. What race do you consider yourself to be? (select <u>one or more</u> of the following)</label>
+<div class="checkbox"><label><input name = "Race" type="checkbox" value="AmIndAlNat" /> American Indian or Alaska Native</label></div>
+<div class="checkbox"><label><input name = "Race" type="checkbox" value="Asian"/> Asian</label></div>
+<div class="checkbox"><label><input name = "Race" type="checkbox" value="BlAfAm" /> Black or African American</label></div>
+<div class="checkbox"><label><input name = "Race" type="checkbox" value = "NHPI" /> Native Hawaiian or Other Pacific Islander</label></div>
+<div class="checkbox"><label><input name = "Race" type="checkbox" value =White" /> White</label></div>
+<div class="checkbox"><label><input name = "Race" type="checkbox" value="Other" /> Other</label></div>
+</fieldset>
+</h4>
+
+<h4>
+<button type="button" onclick="javascript:validateAge()">Continue</button></h4>
+</div>
+
+
+<!-- Insert Podcast -->
+
+<div class="page" id="page4">
+
+
+<h4>If you have not done a podcast task with this requester before, you are elibigle for this study. Before continuing, make sure to accept this HIT.</h4>
+
+<h3>Instructions:</h3>
+<h4>You will be shown clips from 10 stories. For each story, you will be presented with 4 audio clips. When you have completed listening to an audio clip, you will be automatically directed to the next page. For each audio clip, you will be asked to rate your curiosity about hearing the rest of the story. Then, you will be asked to write a short summary of the story you've heard so far. Finally, you will be given the option of continuing to the end of the story. </h4>
+
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+</div>
+
+
+
+<!-- TRIAL 1 -->
+
+<div class="page" id="page5">
+<fieldset>
+<h3> Story #1</h3>
+<h4> Click <b>play</b> to start the story. </h4>
+<h4> 
+ <audio id="player1" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial1_sentence1}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player1').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player1').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player1").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page6">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious1_1" id="curious1_1" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious1_1" id="curious1_1" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious1_1" id="curious1_1" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_1" id="curious1_1" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_1" id="curious1_1" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_1" id="curious1_1" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_1" id="curious1_1" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+<div class="page" id="page7">
+<fieldset>
+<h3>Story #1, Continued</h3>
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player1_2" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial1_sentence2}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player1_2').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player1_2').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player1_2").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page8">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious1_2" id="curious1_2" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious1_2" id="curious1_2" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious1_2" id="curious1_2" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_2" id="curious1_2" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_2" id="curious1_2" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_2" id="curious1_2" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_2" id="curious1_2" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page9">
+<fieldset>
+<h3>Story #1, Continued</h3>
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player1_3" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial1_sentence3}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player1_3').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player1_3').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player1_3").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page10">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious1_3" id="curious1_3" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious1_3" id="curious1_3" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious1_3" id="curious1_3" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_3" id="curious1_3" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_3" id="curious1_3" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_3" id="curious1_3" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_3" id="curious1_3" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+
+</div>
+
+<div class="page" id="page11">
+<fieldset>
+<h3>Story #1, Continued</h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player1_4" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial1_sentence4}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player1_4').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player1_4').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player1_4").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page12">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious1_4" id="curious1_4" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious1_4" id="curious1_4" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious1_4" id="curious1_4" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_4" id="curious1_4" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_4" id="curious1_4" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_4" id="curious1_4" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious1_4" id="curious1_4" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+
+
+<div class="page" id="page13">
+<section>
+
+<!-- summarize the beginning of the story -->
+<h4>
+<fieldset><label>Summarize what you've heard in a few words.</label>
+<textarea cols="50" id="trial1_summary" name="summary1" rows="3"></textarea>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:CheckSummary1()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page14">
+<section>
+<fieldset>
+<h3>Story #1, Continued</h3>
+<h4><label>Do you want to hear the rest of this story?</label>
+<div class="radio"><label><input name="trial1_HearEnd" type="radio" value="yes" style="vertical-align: middle" />Yes</label></div>
+<div class="radio"><label><input name="trial1_HearEnd" type="radio" value="no" style="vertical-align: middle" />No</label></div>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:Skip()">Continue</button></h4> <br/>
+</section>
+</div>
+<!-- need to check the SKIP FUNCTION to see if it's skipping 2 pages or just to the end -->
+
+<div class="page" id="page15">
+<fieldset>
+<h3>Story #1, Continued</h3>
+<h4> Here is the end of the story: 
+
+<audio id="player1_end" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial1_end}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player1_end').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player1_end').pause()">Pause</button>
+</div></h4>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+<!-- Transition to TRIAL 2 -->
+
+
+<div class="page" id="page16">
+<fieldset>
+
+<h4> Thanks for your feedback! Now you're going to hear a <b>new</b> Story. Click to start the next Story. </h4> 
+ 
+
+
+<p>&nbsp;</p>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+<!-- TRIAL 2 -->
+
+
+<div class="page" id="page17">
+<fieldset>
+<h3> Story #2 </h3>
+
+<h4> Click <b>play</b> to start the story. </h4>
+<h4> 
+ <audio id="player2_1" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial2_sentence1}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player2_1').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player2_1').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player2_1").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page18">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious2_1" id="curious2_1" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious2_1" id="curious2_1" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious2_1" id="curious2_1" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_1" id="curious2_1" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_1" id="curious2_1" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_1" id="curious2_1" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_1" id="curious2_1" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+<div class="page" id="page19">
+<fieldset>
+<h3> Story #2, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player2_2" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial2_sentence2}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player2_2').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player2_2').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player2_2").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page20">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious2_2" id="curious2_2" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious2_2" id="curious2_2" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious2_2" id="curious2_2" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_2" id="curious2_2" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_2" id="curious2_2" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_2" id="curious2_2" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_2" id="curious2_2" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page21">
+<fieldset>
+<h3> Story #2, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+
+
+<h4> 
+ <audio id="player2_3" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial2_sentence3}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player2_3').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player2_3').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player2_3").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page22">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious2_3" id="curious2_3" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious2_3" id="curious2_3" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious2_3" id="curious2_3" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_3" id="curious2_3" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_3" id="curious2_3" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_3" id="curious2_3" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_3" id="curious2_3" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+
+</div>
+
+<div class="page" id="page23">
+<fieldset>
+<h3> Story #2, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player2_4" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial2_sentence4}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player2_4').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player2_4').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player2_4").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page24">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious2_4" id="curious2_4" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious2_4" id="curious2_4" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious2_4" id="curious2_4" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_4" id="curious2_4" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_4" id="curious2_4" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_4" id="curious2_4" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious2_4" id="curious2_4" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+
+
+
+<div class="page" id="page25">
+<section>
+
+<!-- summarize the beginning of the story -->
+<h4>
+<fieldset>
+<h3> Story #2, Continued </h3>
+<label>Summarize what you've heard in a few words.</label>
+<textarea cols="50" id="trial2_summary" name="summary2" rows="3"></textarea>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:CheckSummary2()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page26">
+<section>
+
+<fieldset><h3> Story #2, Continued </h3>
+<h4><label>Do you want to hear the rest of this story?</label>
+<div class="radio"><label><input name="trial2_HearEnd" type="radio" value="yes" style="vertical-align: middle" />Yes</label></div>
+<div class="radio"><label><input name="trial2_HearEnd" type="radio" value="no" style="vertical-align: middle" />No</label></div>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:Skip()">Continue</button></h4> <br/>
+</section>
+</div>
+<!-- need to check the SKIP FUNCTION to see if it's skipping 2 pages or just to the end -->
+
+<div class="page" id="page27">
+<fieldset>
+<h4> Here is the end of the story: 
+
+<audio id="player2_end" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial2_end}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player2_end').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player2_end').pause()">Pause</button>
+</div></h4>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+<!-- Transition to TRIAL 3 -->
+
+
+<div class="page" id="page28">
+<fieldset>
+
+<h4> Thanks for your feedback! Now you're going to hear a <b>new</b> Story. Click to start the next Story. </h4> 
+ 
+
+
+<p>&nbsp;</p>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+<!-- TRIAL 3 -->
+
+<div class="page" id="page29">
+<fieldset>
+<h3> Story #3 </h3>
+
+<h4> Click <b>play</b> to start the story. </h4>
+<h4> 
+ <audio id="player3_1" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial3_sentence1}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player3_1').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player3_1').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player3_1").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page30">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious3_1" id="curious3_1" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious3_1" id="curious3_1" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious3_1" id="curious3_1" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_1" id="curious3_1" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_1" id="curious3_1" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_1" id="curious3_1" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_1" id="curious3_1" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+<div class="page" id="page31">
+<fieldset>
+<h3> Story #3, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player3_2" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial3_sentence2}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player3_2').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player3_2').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player3_2").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page32">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious3_2" id="curious3_2" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious3_2" id="curious3_2" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious3_2" id="curious3_2" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_2" id="curious3_2" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_2" id="curious3_2" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_2" id="curious3_2" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_2" id="curious3_2" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page33">
+<fieldset>
+<h3> Story #3, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player3_3" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial3_sentence3}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player3_3').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player3_3').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player3_3").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page34">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious3_3" id="curious3_3" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious3_3" id="curious3_3" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious3_3" id="curious3_3" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_3" id="curious3_3" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_3" id="curious3_3" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_3" id="curious3_3" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_3" id="curious3_3" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+
+</div>
+
+
+<div class="page" id="page35">
+<fieldset>
+<h3> Story #3, Continued </h3>
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+
+<h4> 
+ <audio id="player3_4" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial3_sentence4}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player3_4').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player3_4').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player3_4").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page36">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious3_4" id="curious3_4" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious3_4" id="curious3_4" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious3_4" id="curious3_4" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_4" id="curious3_4" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_4" id="curious3_4" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_4" id="curious3_4" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious3_4" id="curious3_4" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+
+
+<div class="page" id="page37">
+<section>
+
+<!-- summarize the beginning of the story -->
+
+<fieldset>
+<h3> Story #3, Continued </h3>
+<h4><label>Summarize what you've heard in a few words.</label>
+<textarea cols="50" id="trial3_summary" name="summary3" rows="3"></textarea>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:CheckSummary3()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page38">
+<section>
+
+<fieldset>
+<h3> Story #3, Continued </h3>
+<h4><label>Do you want to hear the rest of this story?</label>
+<div class="radio"><label><input name="trial3_HearEnd" type="radio" value="yes" style="vertical-align: middle" />Yes</label></div>
+<div class="radio"><label><input name="trial3_HearEnd" type="radio" value="no" style="vertical-align: middle" />No</label></div>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:Skip()">Continue</button></h4> <br/>
+</section>
+</div>
+<!-- need to check the SKIP FUNCTION to see if it's skipping 2 pages or just to the end -->
+
+<div class="page" id="page39">
+<fieldset>
+<h3> Story #3, Continued </h3>
+<h4> Here is the end of the story: 
+
+<audio id="player3_end" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial3_end}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player3_end').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player3_end').pause()">Pause</button>
+</div></h4>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+<!-- Transition to TRIAL 4 -->
+
+
+<div class="page" id="page40">
+<fieldset>
+
+<h4> Thanks for your feedback! Now you're going to hear a <b>new</b> Story. Click to start the next Story. </h4> 
+ 
+
+
+<p>&nbsp;</p>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+
+<!-- TRIAL 4 -->
+
+
+
+<div class="page" id="page41">
+<fieldset>
+<h3> Story #4 </h3>
+
+<h4> Click <b>play</b> to start the story. </h4>
+
+<h4> 
+ <audio id="player4_1" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial4_sentence1}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player4_1').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player4_1').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player4_1").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page42">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious4_1" id="curious4_1" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious4_1" id="curious4_1" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious4_1" id="curious4_1" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_1" id="curious4_1" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_1" id="curious4_1" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_1" id="curious4_1" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_1" id="curious4_1" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+<div class="page" id="page43">
+<fieldset>
+<h3> Story #4, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player4_2" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial4_sentence2}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player4_2').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player4_2').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player4_2").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page44">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious4_2" id="curious4_2" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious4_2" id="curious4_2" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious4_2" id="curious4_2" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_2" id="curious4_2" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_2" id="curious4_2" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_2" id="curious4_2" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_2" id="curious4_2" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page45">
+<fieldset>
+<h3> Story #4, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player4_3" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial4_sentence3}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player4_3').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player4_3').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player4_3").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page46">
+<section>
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious4_3" id="curious4_3" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious4_3" id="curious4_3" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious4_3" id="curious4_3" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_3" id="curious4_3" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_3" id="curious4_3" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_3" id="curious4_3" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_3" id="curious4_3" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+
+</div>
+
+<div class="page" id="page47">
+<fieldset>
+<h3> Story #4, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player4_4" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial4_sentence4}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player4_4').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player4_4').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player4_4").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page48">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious4_4" id="curious4_4" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious4_4" id="curious4_4" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious4_4" id="curious4_4" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_4" id="curious4_4" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_4" id="curious4_4" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_4" id="curious4_4" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious4_4" id="curious4_4" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+
+<div class="page" id="page49">
+<section>
+
+<!-- summarize the beginning of the story -->
+
+<fieldset>
+<h3> Story #4, Continued </h3>
+<h4><label>Summarize what you've heard in a few words.</label>
+<textarea cols="50" id="trial4_summary" name="summary4" rows="3"></textarea>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:CheckSummary4()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page50">
+<section>
+
+<fieldset>
+<h3> Story #4, Continued </h3>
+<h4><label>Do you want to hear the rest of this story?</label>
+<div class="radio"><label><input name="trial4_HearEnd" type="radio" value="yes" style="vertical-align: middle" />Yes</label></div>
+<div class="radio"><label><input name="trial4_HearEnd" type="radio" value="no" style="vertical-align: middle" />No</label></div>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:Skip()">Continue</button></h4> <br/>
+</section>
+</div>
+<!-- need to check the SKIP FUNCTION to see if it's skipping 2 pages or just to the end -->
+
+<div class="page" id="page51">
+<fieldset>
+<h3> Story #4, Continued </h3>
+<h4> Here is the end of the story: 
+
+<audio id="player4_end" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial4_end}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player4_end').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player4_end').pause()">Pause</button>
+</div></h4>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+
+<!-- Transition to TRIAL 5 -->
+
+
+<div class="page" id="page52">
+<fieldset>
+
+<h4> Thanks for your feedback! Now you're going to hear a <b>new</b> Story. Click to start the next Story. </h4> 
+ 
+
+
+<p>&nbsp;</p>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+
+
+<!-- TRIAL 5 -->
+
+
+
+<div class="page" id="page53">
+<fieldset>
+<h3> Story #5 </h3>
+
+<h4> Click <b>play</b> to start the story. </h4>
+<h4> 
+ <audio id="player5_1" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial5_sentence1}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player5_1').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player5_1').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player5_1").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page54">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious5_1" id="curious5_1" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious5_1" id="curious5_1" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious5_1" id="curious5_1" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_1" id="curious5_1" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_1" id="curious5_1" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_1" id="curious5_1" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_1" id="curious5_1" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+<div class="page" id="page55">
+<fieldset>
+<h3> Story #5, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player5_2" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial5_sentence2}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player5_2').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player5_2').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player5_2").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page56">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious5_2" id="curious5_2" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious5_2" id="curious5_2" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious5_2" id="curious5_2" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_2" id="curious5_2" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_2" id="curious5_2" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_2" id="curious5_2" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_2" id="curious5_2" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page57">
+<fieldset>
+<h3> Story #5, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player5_3" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial5_sentence3}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player5_3').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player5_3').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player5_3").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page58">
+<section>
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious5_3" id="curious5_3" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious5_3" id="curious5_3" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious5_3" id="curious5_3" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_3" id="curious5_3" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_3" id="curious5_3" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_3" id="curious5_3" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_3" id="curious5_3" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+
+</div>
+
+<div class="page" id="page59">
+<fieldset>
+<h3> Story #5, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player5_4" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial5_sentence4}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player5_4').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player5_4').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player5_4").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page60">
+<section>
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious5_4" id="curious5_4" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious5_4" id="curious5_4" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious5_4" id="curious5_4" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_4" id="curious5_4" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_4" id="curious5_4" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_4" id="curious5_4" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious5_4" id="curious5_4" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page61">
+<section>
+
+<!-- summarize the beginning of the story -->
+
+<fieldset>
+<h3> Story #5, Continued </h3>
+<h4><label>Summarize what you've heard in a few words.</label>
+<textarea cols="50" id="trial5_summary" name="summary5" rows="3"></textarea>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:CheckSummary5()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page62">
+<section>
+
+<fieldset>
+<h3> Story #5, Continued </h3>
+<h4><label>Do you want to hear the rest of this story?</label>
+<div class="radio"><label><input name="trial5_HearEnd" type="radio" value="yes" style="vertical-align: middle" />Yes</label></div>
+<div class="radio"><label><input name="trial5_HearEnd" type="radio" value="no" style="vertical-align: middle" />No</label></div>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:Skip()">Continue</button></h4> <br/>
+</section>
+</div>
+<!-- need to check the SKIP FUNCTION to see if it's skipping 2 pages or just to the end -->
+
+<div class="page" id="page63">
+<fieldset>
+<h3> Story #5, Continued </h3>
+<h4> Here is the end of the story: 
+
+<audio id="player5_end" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial5_end}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player5_end').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player5_end').pause()">Pause</button>
+</div></h4>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+<!-- Transition to TRIAL 6 -->
+
+
+<div class="page" id="page64">
+<fieldset>
+
+<h4> Thanks for your feedback! Now you're going to hear a <b>new</b> Story. Click to start the next Story. </h4> 
+ 
+
+
+<p>&nbsp;</p>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+<!-- TRIAL 6 -->
+
+
+
+<div class="page" id="page65">
+<fieldset>
+<h3> Story #6 </h3>
+
+<h4> Click <b>play</b> to start the story. </h4>
+<h4> 
+ <audio id="player6_1" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial6_sentence1}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player6_1').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player6_1').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player6_1").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page66">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious6_1" id="curious6_1" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious6_1" id="curious6_1" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious6_1" id="curious6_1" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_1" id="curious6_1" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_1" id="curious6_1" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_1" id="curious6_1" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_1" id="curious6_1" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+<div class="page" id="page67">
+<fieldset>
+<h3> Story #6, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player6_2" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial6_sentence2}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player6_2').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player6_2').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player6_2").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page68">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious6_2" id="curious6_2" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious6_2" id="curious6_2" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious6_2" id="curious6_2" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_2" id="curious6_2" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_2" id="curious6_2" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_2" id="curious6_2" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_2" id="curious6_2" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page69">
+<fieldset>
+<h3> Story #6, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player6_3" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial6_sentence3}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player6_3').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player6_3').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player6_3").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page70">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious6_3" id="curious6_3" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious6_3" id="curious6_3" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious6_3" id="curious6_3" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_3" id="curious6_3" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_3" id="curious6_3" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_3" id="curious6_3" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_3" id="curious6_3" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+
+</div>
+
+<div class="page" id="page71">
+<fieldset>
+<h3> Story #6, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4><h4> 
+ <audio id="player6_4" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial6_sentence4}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player6_4').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player6_4').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player6_4").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page72">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious6_4" id="curious6_4" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious6_4" id="curious6_4" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious6_4" id="curious6_4" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_4" id="curious6_4" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_4" id="curious6_4" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_4" id="curious6_4" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious6_4" id="curious6_4" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+
+
+<div class="page" id="page73">
+<section>
+
+<!-- summarize the beginning of the story -->
+<fieldset>
+<h3> Story #6, Continued </h3>
+<h4><label>Summarize what you've heard in a few words.</label>
+<textarea cols="50" id="trial6_summary" name="summary6" rows="3"></textarea>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:CheckSummary6()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page74">
+<section>
+
+<fieldset>
+<h3> Story #6, Continued </h3>
+<h4><label>Do you want to hear the rest of this story?</label>
+<div class="radio"><label><input name="trial6_HearEnd" type="radio" value="yes" style="vertical-align: middle" />Yes</label></div>
+<div class="radio"><label><input name="trial6_HearEnd" type="radio" value="no" style="vertical-align: middle" />No</label></div>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:Skip()">Continue</button></h4> <br/>
+</section>
+</div>
+<!-- need to check the SKIP FUNCTION to see if it's skipping 2 pages or just to the end -->
+
+<div class="page" id="page75">
+<fieldset>
+<h3> Story #6, Continued </h3>
+<h4> Here is the end of the story: 
+
+<audio id="player6_end" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial6_end}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player6_end').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player6_end').pause()">Pause</button>
+</div></h4>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+
+
+<!-- Transition to TRIAL 7 -->
+
+
+<div class="page" id="page76">
+<fieldset>
+
+<h4> Thanks for your feedback! Now you're going to hear a <b>new</b> Story. Click to start the next Story. </h4> 
+ 
+
+
+<p>&nbsp;</p>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+
+<!-- TRIAL 7 -->
+
+
+
+
+
+
+
+<div class="page" id="page77">
+<fieldset>
+<h3> Story #7 </h3>
+
+<h4> Click <b>play</b> to start the story. </h4>
+<h4> 
+ <audio id="player7_1" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial7_sentence1}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player7_1').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player7_1').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player7_1").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page78">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious7_1" id="curious7_1" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious7_1" id="curious7_1" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious7_1" id="curious7_1" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_1" id="curious7_1" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_1" id="curious7_1" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_1" id="curious7_1" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_1" id="curious7_1" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+<div class="page" id="page79">
+<fieldset>
+<h3> Story #7, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player7_2" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial7_sentence2}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player7_2').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player7_2').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player7_2").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page80">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious7_2" id="curious7_2" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious7_2" id="curious7_2" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious7_2" id="curious7_2" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_2" id="curious7_2" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_2" id="curious7_2" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_2" id="curious7_2" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_2" id="curious7_2" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page81">
+<fieldset>
+<h3> Story #7, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player7_3" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial7_sentence3}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player7_3').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player7_3').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player7_3").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page82">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious7_3" id="curious7_3" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious7_3" id="curious7_3" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious7_3" id="curious7_3" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_3" id="curious7_3" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_3" id="curious7_3" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_3" id="curious7_3" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_3" id="curious7_3" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+
+</div>
+
+
+<div class="page" id="page83">
+<fieldset>
+<h3> Story #7, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player7_4" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial7_sentence4}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player7_4').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player7_4').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player7_4").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page84">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious7_4" id="curious7_4" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious7_4" id="curious7_4" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious7_4" id="curious7_4" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_4" id="curious7_4" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_4" id="curious7_4" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_4" id="curious7_4" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious7_4" id="curious7_4" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+
+
+<div class="page" id="page85">
+<section>
+
+<!-- summarize the beginning of the story -->
+
+<fieldset>
+<h3> Story #7, Continued </h3>
+<h4><label>Summarize what you've heard in a few words.</label>
+<textarea cols="50" id="trial7_summary" name="summary7" rows="3"></textarea>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:CheckSummary7()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page86">
+<section>
+
+<fieldset>
+<h3> Story #7, Continued </h3>
+<h4><label>Do you want to hear the rest of this story?</label>
+<div class="radio"><label><input name="trial7_HearEnd" type="radio" value="yes" style="vertical-align: middle" />Yes</label></div>
+<div class="radio"><label><input name="trial7_HearEnd" type="radio" value="no" style="vertical-align: middle" />No</label></div>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:Skip()">Continue</button></h4> <br/>
+</section>
+</div>
+<!-- need to check the SKIP FUNCTION to see if it's skipping 2 pages or just to the end -->
+
+<div class="page" id="page87">
+<fieldset>
+<h3> Story #7, Continued </h3>
+<h4> Here is the end of the story: 
+
+<audio id="player7_end" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial7_end}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player7_end').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player7_end').pause()">Pause</button>
+</div></h4>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+
+
+
+
+
+
+<!-- Transition to TRIAL 8 -->
+
+
+<div class="page" id="page88">
+<fieldset>
+
+<h4> Thanks for your feedback! Now you're going to hear a <b>new</b> Story. Click to start the next Story. </h4> 
+ 
+
+
+<p>&nbsp;</p>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+
+
+
+<!-- TRIAL 8 -->
+
+
+
+
+
+
+
+
+
+<div class="page" id="page89">
+<fieldset>
+<h3> Story #8 </h3>
+
+<h4> Click <b>play</b> to start the story. </h4>
+<h4> 
+ <audio id="player8_1" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial8_sentence1}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player8_1').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player8_1').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player8_1").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page90">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious8_1" id="curious8_1" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious8_1" id="curious8_1" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious8_1" id="curious8_1" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_1" id="curious8_1" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_1" id="curious8_1" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_1" id="curious8_1" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_1" id="curious8_1" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+<div class="page" id="page91">
+<fieldset>
+<h3> Story #8, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player8_2" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial8_sentence2}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player8_2').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player8_2').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player8_2").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page92">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious8_2" id="curious8_2" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious8_2" id="curious8_2" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious8_2" id="curious8_2" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_2" id="curious8_2" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_2" id="curious8_2" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_2" id="curious8_2" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_2" id="curious8_2" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page93">
+<fieldset>
+<h3> Story #8, Continued </h3>
+
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4><h4> 
+ <audio id="player8_3" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial8_sentence3}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player8_3').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player8_3').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player8_3").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page94">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious8_3" id="curious8_3" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious8_3" id="curious8_3" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious8_3" id="curious8_3" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_3" id="curious8_3" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_3" id="curious8_3" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_3" id="curious8_3" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_3" id="curious8_3" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+
+</div>
+
+
+
+
+<div class="page" id="page95">
+<fieldset>
+<h3> Story #8, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player8_4" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial8_sentence4}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player8_4').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player8_4').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player8_4").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page96">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious8_4" id="curious8_4" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious8_4" id="curious8_4" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious8_4" id="curious8_4" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_4" id="curious8_4" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_4" id="curious8_4" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_4" id="curious8_4" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious8_4" id="curious8_4" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+
+<div class="page" id="page97">
+<section>
+
+<!-- summarize the beginning of the story -->
+<fieldset>
+<h3> Story #8, Continued </h3>
+<h4><label>Summarize what you've heard in a few words.</label>
+<textarea cols="50" id="trial8_summary" name="summary8" rows="3"></textarea>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:CheckSummary8()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page98">
+<section>
+
+<fieldset>
+<h3> Story #8, Continued </h3>
+<h4><label>Do you want to hear the rest of this story?</label>
+<div class="radio"><label><input name="trial8_HearEnd" type="radio" value="yes" style="vertical-align: middle" />Yes</label></div>
+<div class="radio"><label><input name="trial8_HearEnd" type="radio" value="no" style="vertical-align: middle" />No</label></div>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:Skip()">Continue</button></h4> <br/>
+</section>
+</div>
+<!-- need to check the SKIP FUNCTION to see if it's skipping 2 pages or just to the end -->
+
+<div class="page" id="page99">
+<fieldset>
+<h3> Story #8, Continued </h3>
+<h4> Here is the end of the story: 
+
+<audio id="player8_end" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial8_end}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player8_end').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player8_end').pause()">Pause</button>
+</div></h4>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+
+
+
+
+<!-- Transition to TRIAL 9 -->
+
+
+<div class="page" id="page100">
+<fieldset>
+
+<h4> Thanks for your feedback! Now you're going to hear a <b>new</b> Story. Click to start the next Story. </h4> 
+ 
+
+
+<p>&nbsp;</p>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+
+
+
+
+<!-- TRIAL 9 -->
+
+
+
+
+
+
+<div class="page" id="page101">
+<fieldset>
+<h3> Story #9 </h3>
+
+<h4> Click <b>play</b> to start the story. </h4>
+<h4> 
+ <audio id="player9_1" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial9_sentence1}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player9_1').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player9_1').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player9_1").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page102">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious9_1" id="curious9_1" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious9_1" id="curious9_1" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious9_1" id="curious9_1" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_1" id="curious9_1" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_1" id="curious9_1" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_1" id="curious9_1" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_1" id="curious9_1" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+<div class="page" id="page103">
+<fieldset>
+<h3> Story #9, Continued </h3>
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player9_2" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial9_sentence2}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player9_2').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player9_2').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player9_2").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page104">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious9_2" id="curious9_2" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious9_2" id="curious9_2" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious9_2" id="curious9_2" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_2" id="curious9_2" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_2" id="curious9_2" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_2" id="curious9_2" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_2" id="curious9_2" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page105">
+<fieldset>
+<h3> Story #9, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player9_3" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial9_sentence3}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player9_3').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player9_3').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player9_3").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page106">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious9_3" id="curious9_3" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious9_3" id="curious9_3" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious9_3" id="curious9_3" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_3" id="curious9_3" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_3" id="curious9_3" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_3" id="curious9_3" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_3" id="curious9_3" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+<div class="page" id="page107">
+<fieldset>
+<h3> Story #9, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player9_4" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial9_sentence4}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player9_4').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player9_4').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player9_4").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page108">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious9_4" id="curious9_4" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious9_4" id="curious9_4" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious9_4" id="curious9_4" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_4" id="curious9_4" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_4" id="curious9_4" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_4" id="curious9_4" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious9_4" id="curious9_4" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+
+<div class="page" id="page109">
+<section>
+
+<!-- summarize the beginning of the story -->
+<fieldset>
+<h3> Story #9, Continued </h3>
+<h4><label>Summarize what you've heard in a few words.</label>
+<textarea cols="50" id="trial9_summary" name="summary9" rows="3"></textarea>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:CheckSummary9()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page110">
+<section>
+
+<fieldset>
+<h3> Story #9, Continued </h3>
+<h4><label>Do you want to hear the rest of this story?</label>
+<div class="radio"><label><input name="trial9_HearEnd" type="radio" value="yes" style="vertical-align: middle" />Yes</label></div>
+<div class="radio"><label><input name="trial9_HearEnd" type="radio" value="no" style="vertical-align: middle" />No</label></div>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:Skip()">Continue</button></h4> <br/>
+</section>
+</div>
+<!-- need to check the SKIP FUNCTION to see if it's skipping 2 pages or just to the end -->
+
+<div class="page" id="page111">
+<fieldset>
+<h3> Story #9, Continued </h3>
+<h4> Here is the end of the story: 
+
+<audio id="player9_end" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial9_end}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player9_end').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player9_end').pause()">Pause</button>
+</div></h4>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Transition to TRIAL 10 -->
+
+
+<div class="page" id="page112">
+<fieldset>
+
+<h4> Thanks for your feedback! Now you're going to hear a <b>new</b> Story. Click to start the next Story. </h4> 
+ 
+
+
+<p>&nbsp;</p>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- TRIAL 10 -->
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="page" id="page113">
+<fieldset>
+<h3> Story #10 </h3>
+
+<h4> Click <b>play</b> to start the story. </h4>
+<h4> 
+ <audio id="player10_1" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial10_sentence1}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player10_1').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player10_1').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player10_1").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page114">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious10_1" id="curious10_1" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious10_1" id="curious10_1" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious10_1" id="curious10_1" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_1" id="curious10_1" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_1" id="curious10_1" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_1" id="curious10_1" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_1" id="curious10_1" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+<div class="page" id="page115">
+<fieldset>
+<h3> Story #10, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player10_2" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial10_sentence2}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player10_2').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player10_2').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player10_2").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page116">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious10_2" id="curious10_2" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious10_2" id="curious10_2" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious10_2" id="curious10_2" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_2" id="curious10_2" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_2" id="curious10_2" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_2" id="curious10_2" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_2" id="curious10_2" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page117">
+<fieldset>
+<h3> Story #10, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player10_3" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial10_sentence3}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player10_3').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player10_3').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player10_3").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page118">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious10_3" id="curious10_3" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious10_3" id="curious10_3" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious10_3" id="curious10_3" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_3" id="curious10_3" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_3" id="curious10_3" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_3" id="curious10_3" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_3" id="curious10_3" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+
+</div>
+
+
+
+<div class="page" id="page119">
+<fieldset>
+<h3> Story #10, Continued </h3>
+
+<h4> Click <b>play</b> to hear the next part of the story. </h4>
+<h4> 
+ <audio id="player10_4" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial10_sentence4}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player10_4').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player10_4').pause()">Pause</button>
+
+</div></h4>
+<script>
+document.getElementById("player10_4").onended = function() {Continue()};
+</script>
+
+<p>&nbsp;</p>
+</fieldset>
+
+</div>
+
+
+<!-- Survey Questions -->
+
+<div class="page" id="page120">
+<section>
+
+<style>
+#radioGroup .wrap {
+  display: inline-table;
+    width: 6em;
+}
+#radioGroup label {
+  display: block;
+  text-align: center;
+  margin: 0 0.2em;
+}
+#radioGroup input[type="radio"] {
+  display: block;
+  margin: 0.5em auto;
+
+}
+}
+</style>
+<h4>
+<fieldset><label>How curious are you to hear the rest of the story?</label>
+<div id="radioGroup">
+  <div class="wrap">
+    <input type="radio" name="curious10_4" id="curious10_4" value="1" />
+    <label for="curious1">Very Not Curious</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious10_4" id="curious10_4" value="2" />
+    <label for="curious2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+  <div class="wrap">
+    <input type="radio" name="curious10_4" id="curious10_4" value="3" />
+    <label for="curious3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_4" id="curious10_4" value="4" />
+    <label for="curious4">Neutral</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_4" id="curious10_4" value="5" />
+    <label for="curious5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_4" id="curious10_4" value="6" />
+    <label for="curious6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  </div>
+ <div class="wrap">
+    <input type="radio" name="curious10_4" id="curious10_4" value="7" />
+    <label for="curious7">Very Curious</label>
+  </div>
+
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:NextTrial()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page121">
+<section>
+
+<!-- summarize the beginning of the story -->
+
+<fieldset>
+<h3> Story #10, Continued </h3>
+<h4><label>Summarize what you've heard in a few words.</label>
+<textarea cols="50" id="trial10_summary" name="summary10" rows="3"></textarea>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:CheckSummary10()">Continue</button></h4> <br/>
+</section>
+</div>
+
+
+<div class="page" id="page122">
+<section>
+
+<fieldset>
+<h3> Story #10, Continued </h3>
+<h4><label>Do you want to hear the rest of this story?</label>
+<div class="radio"><label><input name="trial10_HearEnd" type="radio" value="yes" style="vertical-align: middle" />Yes</label></div>
+<div class="radio"><label><input name="trial10_HearEnd" type="radio" value="no" style="vertical-align: middle" />No</label></div>
+</fieldset></h4>
+<h4><button type="button" onclick="javascript:Skip()">Continue</button></h4> <br/>
+</section>
+</div>
+<!-- need to check the SKIP FUNCTION to see if it's skipping 2 pages or just to the end -->
+
+<div class="page" id="page123">
+<fieldset>
+<h3> Story #10, Continued </h3>
+<h4> Here is the end of the story: 
+
+<audio id="player10_end" src="https://colala.bcs.rochester.edu/shirlene/stimuli/${trial10_end}"> Your browser does not support the audio element. Please do not accept this HIT.</audio>
+<div>
+    <button type="button" onclick="document.getElementById('player10_end').play()">Play</button>
+    <button type="button" onclick="document.getElementById('player10_end').pause()">Pause</button>
+</div></h4>
+</fieldset>
+<h4><button type="button" onclick="javascript:Continue()">Continue</button></h4>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- HIT feedback -->
+
+<div class="page" id="page124">
+<h3> About this Study:</h3>
+<p>&nbsp;</p>
+
+<h4>
+This study investigates predictors of curiosity in adults.</h4><p>
+<h4>The stories in this task are fictional.</h4>
+
+<p>&nbsp;</p>
+<h4>Thanks for your participation! Please enter any comments about this HIT below:</h4>
+<p></p>
+<textarea cols="50" id="comments" name="comments" rows="3"></textarea>
+
+<h4> <input type="submit" value="Done!" /></h4>
+</div>
+
+<div class="page" id="page1000">
+
+<h3> You are ineligible for this HIT. Do NOT accept this HIT. </h4>
+
+<p>&nbsp;</p>
+
+</div>
+<!-- close container -->
+<style type="text/css">fieldset { padding: 10px; background:#fbfbfb; border-radius:5px; margin-bottom:5px; }
+</style>
+</html>

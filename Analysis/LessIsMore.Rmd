@@ -1,0 +1,562 @@
+---
+title: "Less Is More: Data Visualization & Analysis"
+author: "Shirlene Wade"
+output: html_document
+---
+
+<br>
+
+Set-up 
+
+```{r}
+library(reshape2)
+library(plyr)
+library(ggplot2)
+library(stringr)
+library(lme4)
+library(lmerTest)
+library(tidyr)
+library(ggExtra)
+# NOTE: SET WORKING DIRECTORY TO POINT TO THE .CSV FILE
+#setwd(to zip file)
+
+data <- read.csv("LessIsMore_data.csv", header=TRUE)
+
+```
+
+#### Exclude:
+
+  * 1 participant (out of 101) was rejected because they had already done a similar experiment
+  * 2 participants re-did the task after the audio lagged, and were excluded
+  * 1 participant saw two trials of the same story, was excluded
+  * 6 participants who only provided one kind of curiosity rating (not enough variance to z-score responses)
+  
+  
+```{r}
+length(data$WorkerId)
+data <- subset(data, Exclude == "no")
+```
+#### N = 91 
+
+
+```{r}
+# remove summaries, comments
+data[, c("Answer.summary1", "Answer.summary2", "Answer.summary3", "Answer.summary4", "Answer.summary5", "Answer.summary6", "Answer.summary7", "Answer.summary8", "Answer.summary9", "Answer.summary10")] <- list(NULL)
+
+
+
+# create row with Story Number Information
+data$Trial1Story <- str_sub(data$Input.trial1_sentence1, 5, 6)
+data$Trial2Story <- str_sub(data$Input.trial2_sentence1, 5, 6)
+data$Trial3Story <- str_sub(data$Input.trial3_sentence1, 5, 6)
+data$Trial4Story <- str_sub(data$Input.trial4_sentence1, 5, 6)
+data$Trial5Story <- str_sub(data$Input.trial5_sentence1, 5, 6)
+data$Trial6Story <- str_sub(data$Input.trial6_sentence1, 5, 6)
+data$Trial7Story <- str_sub(data$Input.trial7_sentence1, 5, 6)
+data$Trial8Story <- str_sub(data$Input.trial8_sentence1, 5, 6)
+data$Trial9Story <- str_sub(data$Input.trial9_sentence1, 5, 6)
+data$Trial10Story <- str_sub(data$Input.trial10_sentence1, 5, 6)
+
+# create Column with Speed Information
+data$Trial1Speed <- ifelse(grepl("fast", data$Input.trial1_sentence1), "fast", "slow")
+data$Trial2Speed <- ifelse(grepl("fast", data$Input.trial2_sentence1), "fast", "slow")
+data$Trial3Speed <- ifelse(grepl("fast", data$Input.trial3_sentence1), "fast", "slow")
+data$Trial4Speed <- ifelse(grepl("fast", data$Input.trial4_sentence1), "fast", "slow")
+data$Trial5Speed <- ifelse(grepl("fast", data$Input.trial5_sentence1), "fast", "slow")
+data$Trial6Speed <- ifelse(grepl("fast", data$Input.trial6_sentence1), "fast", "slow")
+data$Trial7Speed <- ifelse(grepl("fast", data$Input.trial7_sentence1), "fast", "slow")
+data$Trial8Speed <- ifelse(grepl("fast", data$Input.trial8_sentence1), "fast", "slow")
+data$Trial9Speed <- ifelse(grepl("fast", data$Input.trial9_sentence1), "fast", "slow")
+data$Trial10Speed <- ifelse(grepl("fast", data$Input.trial10_sentence1), "fast", "slow")
+
+# create column with speed and story information concatenated
+data$Trial1SpeedStory <- paste(data$Trial1Speed, data$Trial1Story)
+data$Trial2SpeedStory <- paste(data$Trial2Speed, data$Trial2Story)
+data$Trial3SpeedStory <- paste(data$Trial3Speed, data$Trial3Story)
+data$Trial4SpeedStory <- paste(data$Trial4Speed, data$Trial4Story)
+data$Trial5SpeedStory <- paste(data$Trial5Speed, data$Trial5Story)
+data$Trial6SpeedStory <- paste(data$Trial6Speed, data$Trial6Story)
+data$Trial7SpeedStory <- paste(data$Trial7Speed, data$Trial7Story)
+data$Trial8SpeedStory <- paste(data$Trial8Speed, data$Trial8Story)
+data$Trial9SpeedStory <- paste(data$Trial9Speed, data$Trial9Story)
+data$Trial10SpeedStory <- paste(data$Trial10Speed, data$Trial10Story)
+
+```
+
+```{r}
+# Subset dataset to reshape continuation response data
+continue <- data
+
+# remove irrelevant columns
+continue[,c("Answer.curious1_1", "Answer.curious2_1", "Answer.curious3_1", "Answer.curious4_1", "Answer.curious5_1", "Answer.curious6_1", "Answer.curious7_1","Answer.curious8_1", "Answer.curious9_1", "Answer.curious10_1", "Answer.curious1_2","Answer.curious2_2","Answer.curious3_2","Answer.curious4_2","Answer.curious5_2","Answer.curious6_2","Answer.curious7_2","Answer.curious8_2","Answer.curious9_2","Answer.curious10_2","Answer.curious1_3", "Answer.curious2_3", "Answer.curious3_3", "Answer.curious4_3", "Answer.curious5_3", "Answer.curious6_3", "Answer.curious7_3", "Answer.curious8_3", "Answer.curious9_3", "Answer.curious10_3", "Answer.curious1_4", "Answer.curious2_4", "Answer.curious3_4", "Answer.curious4_4", "Answer.curious5_4", "Answer.curious6_4", "Answer.curious7_4", "Answer.curious8_4", "Answer.curious9_4", "Answer.curious10_4")] <- list(NULL)
+
+# reshape data to get trial information and continuation data
+continue <- melt(continue,
+        # ID variables - all the variables to keep but not split apart on
+    id.vars=c("WorkerId", "Trial1SpeedStory", "Trial2SpeedStory",  "Trial3SpeedStory", "Trial4SpeedStory", "Trial5SpeedStory", "Trial6SpeedStory", "Trial7SpeedStory", "Trial8SpeedStory", "Trial9SpeedStory", "Trial10SpeedStory"),
+        # The source columns
+    measure.vars=c("Answer.trial1_HearEnd", "Answer.trial2_HearEnd", "Answer.trial3_HearEnd", "Answer.trial4_HearEnd", "Answer.trial5_HearEnd", "Answer.trial6_HearEnd", "Answer.trial7_HearEnd", "Answer.trial8_HearEnd", "Answer.trial9_HearEnd", "Answer.trial10_HearEnd"),
+    
+    variable.name="TrialInfo",
+    value.name="Continue" )
+
+
+# create a trial column
+continue$Trial <- as.factor(ifelse(grepl("trial1_", continue$TrialInfo), 1, ifelse(grepl("trial2", continue$TrialInfo), 2, ifelse(grepl("trial3", continue$TrialInfo), 3, ifelse(grepl("trial4", continue$TrialInfo), 4, ifelse(grepl("trial5", continue$TrialInfo), 5, ifelse(grepl("trial6", continue$TrialInfo), 6, ifelse(grepl("trial7", continue$TrialInfo), 7, ifelse(grepl("trial8", continue$TrialInfo), 8, ifelse(grepl("trial9", continue$TrialInfo), 9, 10))))))))))
+
+# create a speed column
+continue$Speed <- as.factor(ifelse(grepl("trial1_", continue$TrialInfo), str_sub(continue$Trial1SpeedStory, 1, 4), ifelse(grepl("trial2", continue$TrialInfo), str_sub(continue$Trial2SpeedStory,1,4), ifelse(grepl("trial3", continue$TrialInfo), str_sub(continue$Trial3SpeedStory,1, 4), ifelse(grepl("trial4", continue$TrialInfo), str_sub(continue$Trial4SpeedStory, 1, 4), ifelse(grepl("trial5", continue$TrialInfo), str_sub(continue$Trial5SpeedStory, 1, 4), ifelse(grepl("trial6_", continue$TrialInfo), str_sub(continue$Trial6SpeedStory, 1, 4), ifelse(grepl("trial7", continue$TrialInfo), str_sub(continue$Trial7SpeedStory, 1, 4), ifelse(grepl("trial8", continue$TrialInfo), str_sub(continue$Trial8SpeedStory, 1, 4), ifelse(grepl("trial9", continue$TrialInfo), str_sub(continue$Trial9SpeedStory, 1, 4), str_sub(continue$Trial10SpeedStory, 1, 4)))))))))))
+
+# create story column
+continue$Story <- as.factor(ifelse(grepl("trial1_", continue$TrialInfo), str_sub(continue$Trial1SpeedStory, 5, 7), ifelse(grepl("trial2", continue$TrialInfo), str_sub(continue$Trial2SpeedStory, 5, 7), ifelse(grepl("trial3", continue$TrialInfo), str_sub(continue$Trial3SpeedStory, 5, 7), ifelse(grepl("trial4", continue$TrialInfo), str_sub(continue$Trial4SpeedStory, 5, 7), ifelse(grepl("trial5", continue$TrialInfo), str_sub(continue$Trial5SpeedStory, 5, 7), ifelse(grepl("trial6_", continue$TrialInfo), str_sub(continue$Trial6SpeedStory, 5, 7), ifelse(grepl("trial7", continue$TrialInfo), str_sub(continue$Trial7SpeedStory, 5, 7), ifelse(grepl("trial8", continue$TrialInfo), str_sub(continue$Trial8SpeedStory, 5, 7), ifelse(grepl("trial9", continue$TrialInfo), str_sub(continue$Trial9SpeedStory, 5, 7), str_sub(continue$Trial10SpeedStory, 5, 7)))))))))))
+
+
+# remove columns that we don't need anymore
+continue[,c("Trial1SpeedStory", "Trial2SpeedStory", "Trial3SpeedStory", "Trial4SpeedStory", "Trial5SpeedStory", "Trial6SpeedStory", "Trial7SpeedStory", "Trial8SpeedStory", "Trial9SpeedStory", "Trial10SpeedStory")] <- list(NULL)
+
+# extra columns with different ways of coding for Continue
+continue$Continue <- as.factor(ifelse(grepl("yes", continue$Continue),"Continued","DNC"))
+continue$ContBinary <- ifelse(grepl("DNC", continue$Continue), 0,1)
+
+```
+
+```{r}
+# CREATE CURIOSITY DATAFRAME
+curiosity <- data
+
+# reshape data to get trial info and curiosity data
+curiosity <- melt(curiosity,
+        # ID variables - all the variables to keep but not split apart on
+    id.vars=c("WorkerId", "Trial1SpeedStory", "Trial2SpeedStory",  "Trial3SpeedStory", "Trial4SpeedStory", "Trial5SpeedStory", "Trial6SpeedStory", "Trial7SpeedStory", "Trial8SpeedStory", "Trial9SpeedStory", "Trial10SpeedStory"),
+        # The source columns
+    measure.vars=c("Answer.curious1_1", "Answer.curious2_1", "Answer.curious3_1", "Answer.curious4_1", "Answer.curious5_1", "Answer.curious6_1", "Answer.curious7_1","Answer.curious8_1", "Answer.curious9_1", "Answer.curious10_1", "Answer.curious1_2","Answer.curious2_2","Answer.curious3_2","Answer.curious4_2","Answer.curious5_2","Answer.curious6_2","Answer.curious7_2","Answer.curious8_2","Answer.curious9_2","Answer.curious10_2","Answer.curious1_3", "Answer.curious2_3", "Answer.curious3_3", "Answer.curious4_3", "Answer.curious5_3", "Answer.curious6_3", "Answer.curious7_3", "Answer.curious8_3", "Answer.curious9_3", "Answer.curious10_3", "Answer.curious1_4", "Answer.curious2_4", "Answer.curious3_4", "Answer.curious4_4", "Answer.curious5_4", "Answer.curious6_4", "Answer.curious7_4", "Answer.curious8_4", "Answer.curious9_4", "Answer.curious10_4"),
+        # Name of the destination column that will identify the original
+        # column that the measurement came from
+    variable.name="TrialInfo",
+    value.name="Curiosity" )
+
+
+# create trial column
+curiosity$Trial <- as.factor(ifelse(grepl("curious1_", curiosity$TrialInfo), 1, ifelse(grepl("curious2", curiosity$TrialInfo), 2, ifelse(grepl("curious3", curiosity$TrialInfo), 3, ifelse(grepl("curious4", curiosity$TrialInfo), 4, ifelse(grepl("curious5", curiosity$TrialInfo), 5, ifelse(grepl("curious6", curiosity$TrialInfo), 6, ifelse(grepl("curious7", curiosity$TrialInfo), 7, ifelse(grepl("curious8", curiosity$TrialInfo), 8, ifelse(grepl("curious9", curiosity$TrialInfo), 9, 10))))))))))
+
+
+# create story column
+# if statement where, given the trial number, pull out the story that they saw for that trial (from trialxspeedstory column)
+curiosity$Story <- as.factor(ifelse(grepl("curious1_", curiosity$TrialInfo), str_sub(curiosity$Trial1SpeedStory, 5, 7), ifelse(grepl("curious2", curiosity$TrialInfo), str_sub(curiosity$Trial2SpeedStory, 5, 7), ifelse(grepl("curious3", curiosity$TrialInfo), str_sub(curiosity$Trial3SpeedStory, 5, 7), ifelse(grepl("curious4", curiosity$TrialInfo), str_sub(curiosity$Trial4SpeedStory, 5, 7), ifelse(grepl("curious5", curiosity$TrialInfo), str_sub(curiosity$Trial5SpeedStory, 5, 7), ifelse(grepl("curious6", curiosity$TrialInfo), str_sub(curiosity$Trial6SpeedStory, 5, 7), ifelse(grepl("curious7", curiosity$TrialInfo), str_sub(curiosity$Trial7SpeedStory, 5, 7), ifelse(grepl("curious8", curiosity$TrialInfo), str_sub(curiosity$Trial8SpeedStory, 5, 7), ifelse(grepl("curious9", curiosity$TrialInfo), str_sub(curiosity$Trial9SpeedStory, 5, 7), str_sub(curiosity$Trial10SpeedStory, 5, 7)))))))))))
+
+# create speed column
+curiosity$Speed <- as.factor(ifelse(grepl("curious1_", curiosity$TrialInfo), str_sub(curiosity$Trial1SpeedStory, 1, 4), ifelse(grepl("curious2", curiosity$TrialInfo), str_sub(curiosity$Trial2SpeedStory, 1, 4), ifelse(grepl("curious3", curiosity$TrialInfo), str_sub(curiosity$Trial3SpeedStory, 1, 4), ifelse(grepl("curious4", curiosity$TrialInfo), str_sub(curiosity$Trial4SpeedStory, 1, 4), ifelse(grepl("curious5", curiosity$TrialInfo), str_sub(curiosity$Trial5SpeedStory, 1, 4), ifelse(grepl("curious6", curiosity$TrialInfo), str_sub(curiosity$Trial6SpeedStory, 1, 4), ifelse(grepl("curious7", curiosity$TrialInfo), str_sub(curiosity$Trial7SpeedStory, 1, 4), ifelse(grepl("curious8", curiosity$TrialInfo), str_sub(curiosity$Trial8SpeedStory, 1, 4), ifelse(grepl("curious9", curiosity$TrialInfo), str_sub(curiosity$Trial9SpeedStory, 1, 4), str_sub(curiosity$Trial10SpeedStory, 1, 4)))))))))))
+
+# create column with sentence number (for curiosity rating)
+curiosity$SentenceNum <- as.factor(ifelse(grepl("_1", curiosity$TrialInfo), 1, ifelse(grepl("_2", curiosity$TrialInfo), 2, ifelse(grepl("_3", curiosity$TrialInfo), 3, 4))))
+
+# z-score curiosity rating
+curiosity$Curiosity <- (as.numeric(curiosity$Curiosity))
+test <- (ddply(curiosity, c("WorkerId"), summarise,
+               Trial = Trial,
+               SentenceNum = SentenceNum,
+               curiosity_scale = scale(Curiosity, center = TRUE, scale = TRUE)))
+
+# create column to allow for merging of curiosity and z-scored curiosity datasets
+test$merge <- paste(test$WorkerId, test$Trial, test$SentenceNum)
+test[,c("WorkerId", "Trial", "SentenceNum")] <- list(NULL)
+test$curiosity_scale <- as.numeric(test$curiosity_scale)
+curiosity$merge <- paste(curiosity$WorkerId, curiosity$Trial, curiosity$SentenceNum)
+
+# merge z-scored curiosity values into curiosity dataframe
+curiosity <- merge(curiosity, test, by=c("merge"))
+
+# merge curiosity and continuation data into single dataset (alldata)
+alldata <-  merge(continue,curiosity,by=c("WorkerId", "Trial", "Story", "Speed")) 
+alldata$Trial <- as.numeric(alldata$Trial)
+alldata$Curiosity <- as.numeric(as.character(alldata$Curiosity))
+```
+
+
+```{r}
+# mean age
+mean(data$Answer.Age, na.rm=TRUE)
+# sd age
+sd(data$Answer.Age, na.rm=TRUE)
+
+```
+<br><br>
+
+#### Hypotheses:
+
+1. <b>Information Gap Hypothesis</b>: Curiosity stems from an information gap. When a gap between an individual's knowledge is detected, curiosity enhances learning to fill the knowledge gap.
+If this is the case, we would expect the following:
+
+  * People should be more curious about hearing the end when they've encountered less material.
+
+<br>
+
+  
+2. <b>Almost Knowing Hypothesis:</b> People are curious as they anticipate the closing of an information gap.
+If this is the case, we would expect the following:
+
+  * People should be more curious as they hear more content.
+<br>
+
+3. <b>Information Rate Hypothesis:</b> People are sensitive to the rate of potential information gain and are more curious when the information rate is greater.
+If this is the case, we would expect the following:
+
+  * People should be more curious when they hear stories in the "fast" condition vs. the "slow" condition, controlling for content.
+  
+  <br>
+  
+### Curiosity Comparisons
+
+```{r}
+summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE, conf.interval=.95) {
+    library(doBy)
+    
+    # New version of length which can handle NA's: if na.rm==T, don't count them
+    length2 <- function (x, na.rm=FALSE) {
+        if (na.rm) sum(!is.na(x))
+        else       length(x)
+    }
+    
+    # Collapse the data
+    formula <- as.formula(paste(measurevar, paste(groupvars, collapse=" + "), sep=" ~ "))
+    datac <- summaryBy(formula, data=data, FUN=c(length2,mean,sd), na.rm=na.rm)
+    
+    # Rename columns
+    names(datac)[ names(datac) == paste(measurevar, ".mean",    sep="") ] <- measurevar
+    names(datac)[ names(datac) == paste(measurevar, ".sd",      sep="") ] <- "sd"
+    names(datac)[ names(datac) == paste(measurevar, ".length2", sep="") ] <- "N"
+    
+    datac$se <- datac$sd / sqrt(datac$N)  # Calculate standard error of the mean
+    
+    # Confidence interval multiplier for standard error
+    # Calculate t-statistic for confidence interval: 
+    # e.g., if conf.interval is .95, use .975 (above/below), and use df=N-1
+    ciMult <- qt(conf.interval/2 + .5, datac$N-1)
+    datac$ci <- datac$se * ciMult
+    
+    return(datac)
+}
+```
+
+
+#### Raw Curiosity by Participant 
+```{r}
+c_contentsummary <- summarySE(data=curiosity, measurevar="Curiosity", groupvars=c("WorkerId"))
+contentplotgroup <- ggplot(c_contentsummary, aes(x=WorkerId, y=Curiosity)) + geom_bar(position=position_dodge(), stat="identity", fill="turquoise") + geom_errorbar(aes(ymin=Curiosity-ci, ymax=Curiosity+ci), position=position_dodge(.9)) + ylab("Mean Curiosity Rating")
+contentplotgroup
+
+
+```
+
+Comments
+
+  * Lots of differences across participants
+
+
+#### Curiosity by Sentence Number
+
+```{r}
+nice_theme <-  theme_bw() +
+  theme(legend.position = "none",
+        axis.line = element_line(colour = "black"),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    #panel.border = element_blank(),
+    panel.background = element_blank()) 
+ # in grey
+c_contentsummary <- summarySE(data=curiosity, measurevar="curiosity_scale", groupvars=c("SentenceNum"))
+contentplotgroup <- ggplot(c_contentsummary, aes(x=SentenceNum, y=curiosity_scale)) + geom_bar(position=position_dodge(), stat="identity", fill="grey") + geom_errorbar(aes(ymin=curiosity_scale-ci, ymax=curiosity_scale+ci), position=position_dodge(.9)) + ylab("Mean Curiosity Rating") + xlab("Sentence Number") + nice_theme 
+ contentplotgroup 
+
+ 
+ # raw curiosity
+c_contentsummary <- summarySE(data=curiosity, measurevar="Curiosity", groupvars=c("SentenceNum"))
+contentplotgroup <- ggplot(c_contentsummary, aes(x=SentenceNum, y=Curiosity, fill = SentenceNum)) + geom_bar(position=position_dodge(), stat="identity") + geom_errorbar(aes(ymin=Curiosity-ci, ymax=Curiosity+ci), position=position_dodge(.9)) + ylab("Average Curiosity Rating") + xlab("Sentence Number") + nice_theme 
+ contentplotgroup 
+```
+
+<br> <br>
+
+#### Curiosity by Sentence Number, across all stories
+```{r}
+
+contentsummary <- summarySE(data=curiosity, measurevar="curiosity_scale", groupvars=c("SentenceNum", "Story"))
+ggplot(contentsummary, aes(x=SentenceNum, y=curiosity_scale, fill=SentenceNum)) + geom_bar(position=position_dodge(), stat="identity") + geom_errorbar(aes(ymin=curiosity_scale-ci, ymax=curiosity_scale+ci), position=position_dodge(.9)) + ylab("Curiosity Rating") + facet_wrap(~Story)
+
+
+```
+
+##### Comments:
+
+  * Similar trends across stories
+
+<br><br>
+
+#### Curiosity by Sentence Number, across all participants
+```{r}
+## with raw curiosity ratings
+contentsummary <- summarySE(data=curiosity, measurevar="Curiosity", groupvars=c("SentenceNum", "WorkerId"))
+# remove unnecessary columns
+contentsummary[, c("sd", "se", "ci")] <- list(NULL)
+# reshape data
+subjectmeans <- spread(contentsummary, SentenceNum, Curiosity)
+
+
+colnames(subjectmeans) <- c("WorkerId","N","Sentence1", "Sentence2", "Sentence3", "Sentence4")
+ggplot(subjectmeans, aes(x=Sentence4, y=Sentence1, color=WorkerId)) + geom_point() + ylab("Curiosity at Sentence 1") + xlab("Curiosity at Sentence 4") + theme(legend.position="none") + geom_abline(intercept=0, slope=1) + 
+  nice_theme + coord_fixed(ratio = 1, xlim=c(0, 7), ylim=c(0, 7))
+
+# in grey
+ggplot(subjectmeans, aes(x=Sentence4, y=Sentence1)) + geom_point(fill="grey") + ylab("Raw Curiosity at Sentence 1") + xlab("Raw Curiosity at Sentence 4") + theme(legend.position="none") + geom_abline(intercept=0, slope=1) + 
+  nice_theme + coord_fixed(ratio = 1, xlim=c(0, 7), ylim=c(0, 7))
+
+
+
+contentsummary <- summarySE(data=curiosity, measurevar="curiosity_scale", groupvars=c("SentenceNum", "WorkerId"))
+# remove unnecessary columns
+contentsummary[, c("sd", "se", "ci")] <- list(NULL)
+# reshape data
+subjectmeans1 <- spread(contentsummary, SentenceNum, curiosity_scale)
+colnames(subjectmeans1) <- c("WorkerId","N","Sentence1", "Sentence2", "Sentence3", "Sentence4")
+
+## with z-scored curiosity ratings
+## create plot with histograms
+plot_center = ggplot(subjectmeans1, aes(x=Sentence4, y=Sentence1, color=WorkerId)) + geom_point(position="jitter") + ylab("Z-Scored Curiosity at Sentence 1") + xlab("Z-Scored Curiosity at Sentence 4") + theme(legend.position="none") + coord_fixed(ratio = 1)  + nice_theme + geom_vline(xintercept =0, lty=3) + geom_hline(yintercept = 0, lty=3)
+
+ggMarginal(plot_center, type="histogram", bins = 30)
+
+
+# in black and white for paper 
+ plot_center = ggplot(subjectmeans1, aes(x=Sentence4, y=Sentence1)) + geom_point(position="jitter", fill="grey") + ylab("Curiosity at Sentence 1") + xlab("Curiosity at Sentence 4") + theme(legend.position="none") + coord_fixed(ratio = 1)  + nice_theme + geom_vline(xintercept =0, lty=3) + geom_hline(yintercept = 0, lty=3)
+
+ ggMarginal(plot_center, type="histogram", bins = 30)
+```
+
+<br><br>
+
+
+#### Curiosity by Information Rate
+
+```{r}
+# raw curiosity ratings
+c_contentsummary <- summarySE(data=curiosity, measurevar="Curiosity", groupvars=c("Speed"))
+contentplotgroup <- ggplot(c_contentsummary, aes(x=Speed, y=Curiosity, fill = Speed)) + geom_bar(position=position_dodge(), stat="identity") + geom_errorbar(aes(ymin=Curiosity-ci, ymax=Curiosity+ci), position=position_dodge(.9)) + ylab("Mean Curiosity Rating")
+contentplotgroup + nice_theme + scale_x_discrete(breaks = c("fast", "slow"), labels=c("Fast", "Slow"))
+
+# in grey for appendix
+contentplotgroup <- ggplot(c_contentsummary, aes(x=Speed, y=Curiosity)) + geom_bar(position=position_dodge(), stat="identity", fill="grey") + geom_errorbar(aes(ymin=Curiosity-ci, ymax=Curiosity+ci), position=position_dodge(.9)) + ylab("Mean Curiosity Rating")
+contentplotgroup + nice_theme + scale_x_discrete(breaks = c("fast", "slow"), labels=c("Fast", "Slow"))
+
+
+c_contentsummary <- summarySE(data=curiosity, measurevar="curiosity_scale", groupvars=c("Speed"))
+contentplotgroup <- ggplot(c_contentsummary, aes(x=Speed, y=curiosity_scale, fill = Speed)) + geom_bar(position=position_dodge(), stat="identity") + geom_errorbar(aes(ymin=curiosity_scale-ci, ymax=curiosity_scale+ci), position=position_dodge(.9)) + ylab("Mean Curiosity Rating")
+contentplotgroup + nice_theme + scale_x_discrete(breaks = c("fast", "slow"), labels=c("Fast", "Slow"))
+
+
+# with z-scored curiosity ratings
+c_contentsummary <- summarySE(data=curiosity, measurevar="curiosity_scale", groupvars=c("Speed"))
+contentplotgroup <- ggplot(c_contentsummary, aes(x=Speed, y=curiosity_scale)) + geom_bar(position=position_dodge(), stat="identity", fill="grey") + geom_errorbar(aes(ymin=curiosity_scale-ci, ymax=curiosity_scale+ci), position=position_dodge(.9)) + ylab("Mean Curiosity Rating")
+contentplotgroup + nice_theme + scale_x_discrete(breaks = c("fast", "slow"), labels=c("Fast", "Slow"))
+
+```
+
+<br> <br>
+
+#### Curiosity by Information Rate, across all participants
+```{r}
+# with raw curiosity ratings
+contentsummary <- summarySE(data=curiosity, measurevar="Curiosity", groupvars=c("Speed", "WorkerId"))
+
+ggplot(contentsummary, aes(x=Speed, y=Curiosity, fill=Speed)) + geom_bar(position=position_dodge(), stat="identity") + geom_errorbar(aes(ymin=Curiosity-ci, ymax=Curiosity+ci), position=position_dodge(.9)) + ylab("Curiosity Rating") + facet_wrap(~WorkerId)
+
+contentsummary[, c("sd", "se", "ci")] <- list(NULL)
+
+require(tidyr)
+
+subjectmeans <- spread(contentsummary, Speed, Curiosity)
+
+
+ggplot(subjectmeans, aes(x=fast, y=slow, color=WorkerId)) + geom_point(position="jitter") + geom_abline(slope=1, intercept=0) + ylab("Raw Curiosity in Slow Condition") + xlab("Raw Curiosity in Fast Condition") + theme(legend.position="none") + nice_theme + coord_fixed(ratio = 1, xlim=c(1, 7), ylim=c(1, 7))
+
+# in grey / black
+ggplot(subjectmeans, aes(x=fast, y=slow)) + geom_point(position="jitter", color="black") + geom_abline(slope=1, intercept=0) + ylab("Curiosity in Slow Condition") + xlab("Curiosity in Fast Condition") + theme(legend.position="none") + nice_theme + coord_fixed(ratio = 1, xlim=c(1, 7), ylim=c(1, 7))
+
+
+#################################
+# with z-scored curiosity ratings
+contentsummary <- summarySE(data=curiosity, measurevar="curiosity_scale", groupvars=c("Speed", "WorkerId"))
+
+ggplot(contentsummary, aes(x=Speed, y=curiosity_scale, fill=Speed)) + geom_bar(position=position_dodge(), stat="identity") + geom_errorbar(aes(ymin=curiosity_scale-ci, ymax=curiosity_scale+ci), position=position_dodge(.9)) + ylab("Curiosity Rating") + facet_wrap(~WorkerId)
+
+contentsummary[, c("sd", "se", "ci")] <- list(NULL)
+
+require(tidyr)
+
+subjectmeans <- spread(contentsummary, Speed, curiosity_scale)
+
+
+scatter <-ggplot(subjectmeans, aes(x=fast, y=slow, color=WorkerId)) + geom_point(position="jitter") + ylab("Z-Scored Curiosity in Slow Condition") + xlab("Z-Scored Curiosity in Fast Condition") + theme(legend.position="none") + nice_theme + coord_fixed(ratio = 1) + geom_vline(xintercept = 0, lty = 3)+ geom_hline(yintercept=0, lty = 3)
+
+ggMarginal(scatter, type="histogram", bins = 30)
+
+
+```
+
+
+
+## Analyses:
+
+#### 1. Linear regression predicting curiosity from speed and sentence number
+```{r}
+curiosity$Trial <- as.numeric(as.character(curiosity$Trial))
+curiosity$SentenceNum <- as.numeric(as.character(curiosity$SentenceNum))
+
+# contrast coding speed 
+my.cont <- c(0.5, -0.5)
+
+contrasts(curiosity$Speed) <- my.cont
+# fast = 0.5, slow = - 0.5
+
+#### Model 1 -- Curiosity predicted by Speed, SentenceNum, with random effects for WorkerID and Story
+
+linear1 <- lmer(curiosity_scale ~ Speed + SentenceNum + Trial + (1|WorkerId) + (1|Story), data=curiosity)
+
+
+#### Model 2 -- Curiosity predicted by Speed, SentenceNum, their interaction, with random slopes effects for WorkerID and Story
+
+linear2 <- lmer(curiosity_scale ~ Speed*SentenceNum + Trial + (1|WorkerId) + (1|Story), data=curiosity)
+
+
+#### Model 3 -- Curiosity predicted by Speed, SentenceNum, their interaction, with random slopes and intercepts for WorkerID and Story
+
+# linear3 <- lmer(curiosity_scale ~ Speed + SentenceNum + Trial + (1 + Speed + SentenceNum |WorkerId) + (1 + Speed + SentenceNum |Story), data=curiosity)
+
+# failed to converge
+
+anova(linear1, linear2)
+summary(linear1)
+```
+
+
+<br><br>
+
+### Continue Comparison
+
+
+
+#### Continue by Average Curiosty only
+
+```{r}
+
+##########################################################
+##### analysis on 4th sentence curiosity only ######
+#########################################################
+# only look at comments for 4th sentence curiosity
+
+newdata <- subset(alldata, SentenceNum == 4)
+
+# add speed contrast
+contrasts(newdata$Speed) <- my.cont
+
+logistic_newdata <- glmer(ContBinary ~ curiosity_scale + Speed + Trial + (1 | Story) + (1 |WorkerId), data= newdata, family="binomial")
+summary(logistic_newdata)
+
+# logistic1 <- glmer(ContBinary ~ curiosity_scale + Speed + Trial + (1 + Speed + Curiosity | Story) + (1 + Speed + Curiosity |WorkerId), data= newdata, family="binomial")
+# this model failed to converge 
+```
+
+<br><br>
+
+
+#### Plot curiosity for trials that were continued vs. not continued 
+```{r}
+contentsummary <- summarySE(data=newdata, measurevar="curiosity_scale", groupvars=c("Continue"))
+
+ggplot(contentsummary, aes(x=Continue, y=curiosity_scale, fill=Continue)) + geom_bar(position=position_dodge(), stat="identity", fill = "grey") + geom_errorbar(aes(ymin=curiosity_scale-ci, ymax=curiosity_scale+ci), position=position_dodge(.9)) + ylab("Mean Curiosity Rating") + theme(legend.position="none") +  nice_theme + scale_x_discrete(breaks = c("Continued", "DNC"), labels=c("Continued", "Did Not Continue")) + xlab(NULL)
+
+
+```
+
+<br><br>
+
+#### Plotting Continue by Average Curiosity 
+```{r}
+##################
+# with raw curiosity ratings
+contentsummary <- summarySE(data=newdata, measurevar="Curiosity", groupvars=c( "WorkerId", "Continue"))
+contentsummary[, c("N", "sd", "se", "ci")] <- list(NULL)
+
+
+
+require(tidyr)
+subjectmeans <- spread(contentsummary, Continue, Curiosity)
+
+ggplot(subjectmeans, aes(x=DNC, y=Continued)) + geom_point(position="jitter") + geom_abline(slope=1, intercept=0) + ylab("Curiosity Rating for Continued Trials") + xlab("Curiosity Rating for 'Did Not Continue' Trials") + theme(legend.position="none") + nice_theme + coord_fixed(ratio = 1, xlim=c(1,7), ylim=c(1,7))
+
+
+##########################
+## with z-scored curiosity
+
+contentsummary <- summarySE(data=newdata, measurevar="curiosity_scale", groupvars=c( "WorkerId", "Continue"))
+contentsummary[, c("N", "sd", "se", "ci")] <- list(NULL)
+
+require(tidyr)
+subjectmeans <- spread(contentsummary, Continue, curiosity_scale)
+
+ggplot(subjectmeans, aes(x=DNC, y=Continued, color=WorkerId)) + geom_point(position="jitter") + ylab("Curiosity Rating for Continued Trials") + xlab("Curiosity Rating for 'Did Not Continue' Trials") + theme(legend.position="none") +   nice_theme + coord_fixed(ratio = 1, xlim=c(-1.5, 2), ylim=c(-1.5, 2)) + geom_vline(xintercept = 0, lty = 3)+ geom_hline(yintercept=0, lty = 3)
+
+
+scatter <- ggplot(subjectmeans, aes(x=DNC, y=Continued)) + geom_point(position="jitter", color="black") + ylab("Z-Scored Curiosity Rating for Continued Trials") + xlab("Z-Scored Curiosity Rating for 'Did Not Continue' Trials") + theme(legend.position="none") + nice_theme + coord_fixed(ratio = 1) + geom_vline(xintercept = 0, lty = 3)+ geom_hline(yintercept=0, lty = 3)
+ggMarginal(scatter, type="histogram", bins = 30)
+
+```
+
+
+#### Plot average Curiosity Rating for Continue vs. DNC, as bar chart.
+```{r}
+## z-scored curiosity
+contentsummary <- summarySE(data=alldata, measurevar="curiosity_scale", groupvars=c("Continue"))
+
+ggplot(contentsummary, aes(x=Continue, y=curiosity_scale, fill=Continue)) + geom_bar(position=position_dodge(), stat="identity") + geom_errorbar(aes(ymin=curiosity_scale-ci, ymax=curiosity_scale+ci), position=position_dodge(.9)) + ylab("Average Curiosity Rating") + theme(legend.position="none") +  nice_theme + scale_x_discrete(breaks = c("Continued", "DNC"), labels=c("Continued", "Did Not Continue")) + xlab(NULL)
+
+```
+
+ <br><br>
+ 
+
+
+#### Plotting Continue by Information Rate 
+```{r}
+contentsummary <- summarySE(data=newdata, measurevar="ContBinary", groupvars=c( "Speed"))
+
+ggplot(contentsummary, aes(x=Speed, y=ContBinary, fill=Speed)) + geom_bar(position=position_dodge(), stat="identity", fill="grey") + geom_errorbar(aes(ymin=ContBinary-ci, ymax=ContBinary+ci), position=position_dodge(.9)) + ylab("Continue Rate") + scale_x_discrete(breaks = c("fast", "slow"), labels=c("Fast", "Slow")) + nice_theme
+
+```
+
+<br><br>
+
+#### Scatterplot for Fast vs. Slow
+```{r}
+contentsummary <- summarySE(data=alldata, measurevar="ContBinary", groupvars=c( "Speed", "WorkerId"))
+
+contentsummary[, c("sd", "se", "ci")] <- list(NULL)
+
+require(tidyr)
+
+subjectmeans <- spread(contentsummary, Speed, ContBinary)
+colnames(subjectmeans) <- c("WorkerId","N","Fast", "Slow")
+ggplot(subjectmeans, aes(x=Slow, y=Fast, color=WorkerId)) + geom_point(position="jitter") + ylab(" Continuation for High Information Rate") + xlab("Continuation for Low Information Rate") + theme(legend.position="none") + scale_x_continuous(limits = c(0, 1)) + scale_y_continuous(limits = c(0, 1)) + geom_abline(intercept=0, slope=1)  + nice_theme + coord_fixed(ratio = 1, xlim=c(0, 1), ylim=c(0, 1))
+
+```
+
+<br><br>
+
+
+#### Plotting Continue by Average Curiosity for Each Story
+
+```{r}
+contentsummary <- summarySE(data=alldata, measurevar="curiosity_scale", groupvars=c("ContBinary", "Story"))
+
+ggplot(contentsummary, aes(x=ContBinary, y=curiosity_scale, fill=ContBinary)) + geom_bar(position=position_dodge(), stat="identity") + geom_errorbar(aes(ymin=curiosity_scale-ci, ymax=curiosity_scale+ci), position=position_dodge(.9)) + ylab("Curiosity Rating") + facet_wrap(~Story)
+
+```

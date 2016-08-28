@@ -1,0 +1,9 @@
+This respository contains the stimuli, data, and analyses for Less Is More.
+
+In the Stimuli folder, you will find the audio files, .csv and .html files to run the experiment using the Amazon mechanical Turk Interface.
+Audio files can be located at https://colala.bcs.rochester.edu/EXP_CONTENT/shirlene/stimuli/
+
+In the Data folder, you will find the .csv file with the data. Participants have been anonymized.
+
+In the Anaysis folder, you will find the R Markdown File with the code to analyze the data.
+
