@@ -1,5 +1,5 @@
 ---
-title: "Less Is More: Data Visualization & Analysis"
+title: "The Less You Know: Data Visualization & Analysis"
 author: "Shirlene Wade"
 output: html_document
 ---
@@ -18,9 +18,9 @@ library(lmerTest)
 library(tidyr)
 library(ggExtra)
 # NOTE: SET WORKING DIRECTORY TO POINT TO THE .CSV FILE
-#setwd(to zip file)
+#setwd(to file)
 
-data <- read.csv("LessIsMore_data.csv", header=TRUE)
+data <- read.csv("TheLessYouKnow_data.csv", header=TRUE)
 
 ```
 
